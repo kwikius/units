@@ -5,6 +5,7 @@
 #include <cassert>
 
 #include <units/dimensions/temperature.h>
+#include <units/dimensions/time.h>
 
 /*
    get average temperature
@@ -24,30 +25,33 @@ struct filter{
       double const m_k;
  };
 
+template <typename T>
+void update(T & out, std::vector<T> const & v , double const & filter_k)
+{
+   out = std::accumulate(v.begin(),v.end(),out,filter{filter_k});
+}
+
 using namespace units;
 
 namespace {
 
-    typedef units::quantity<units::kelvin> K;
-    double filter_k = 0.8;
+   typedef quantity<kelvin> K;
+   typedef quantity<second> s;
+   double filter_k = 0.9;
 
-    K current_temperature{270};
-}
-
-void update_temperature(std::vector<units::quantity<units::kelvin> > const & v)
-{
-   current_temperature = std::accumulate(v.begin(),v.end(),current_temperature,filter{filter_k});
+   K current_temperature{270};
+   s current_time{1000};
+  
 }
 
 int main()
 {
-  
-  std::cout << current_temperature <<'\n';
 
-  std::vector<K> new_values = {K{270},K{271},K{270},K{271},K{270},K{270}};
+   std::vector<K> new_values = {K{270},K{271},K{270},K{271},K{270},K{270}};
 
-  update_temperature(new_values);
-
-  std::cout << current_temperature <<'\n';
+   for (; current_time < 1005s;  ++current_time){
+      std::cout << "temperature at " << current_time << " = " << current_temperature <<'\n';
+      update(current_temperature,new_values, filter_k);
+   }
 
 }
