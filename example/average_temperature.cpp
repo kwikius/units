@@ -5,7 +5,6 @@
 #include <cassert>
 
 #include <units/dimensions/temperature.h>
-#include <units/dimensions/time.h>
 
 /*
    get average temperature
@@ -25,19 +24,30 @@ struct filter{
       double const m_k;
  };
 
+using namespace units;
+
+namespace {
+
+    typedef units::quantity<units::kelvin> K;
+    double filter_k = 0.8;
+
+    K current_temperature{270};
+}
+
+void update_temperature(std::vector<units::quantity<units::kelvin> > const & v)
+{
+   current_temperature = std::accumulate(v.begin(),v.end(),current_temperature,filter{filter_k});
+}
+
 int main()
 {
   
-  using namespace units;
+  std::cout << current_temperature <<'\n';
 
-  typedef quantity<units::kelvin> K;
+  std::vector<K> new_values = {K{270},K{271},K{270},K{271},K{270},K{270}};
 
-  std::vector<K> ts = {K{270},K{271},K{270},K{271},K{270},K{270}};
+  update_temperature(new_values);
 
-  double filter_k = 0.8;
-
-  K average = std::accumulate(ts.begin(),ts.end(),ts.front(),filter{filter_k});
-
-  std::cout << average << '\n';
+  std::cout << current_temperature <<'\n';
 
 }
