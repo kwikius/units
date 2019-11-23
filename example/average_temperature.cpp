@@ -15,18 +15,18 @@
 // https://en.wikipedia.org/wiki/Exponential_smoothing
 
 struct filter{
-      filter(double k): m_k{k}{ assert( (0 <= k) && (k <= 1));}
-      template <typename T>
-      T operator()( T const & lhs, T const & rhs)const 
-      {
-         return lhs * m_k + rhs * (1.0-m_k);
-      }
+   filter(double k): m_k{k}{ assert( (0 <= k) && (k <= 1));}
+   template <typename T>
+   T operator()( T const & lhs, T const & rhs)const 
+   {
+      return lhs * m_k + rhs * (1.0-m_k);
+   }
    private:
       double const m_k;
  };
 
-template <typename T>
-void update(T & out, std::vector<T> const & v , double const & filter_k)
+template <typename T, typename T1>
+void update(T1 & out, std::vector<T> const & v , double const & filter_k)
 {
    out = std::accumulate(v.begin(),v.end(),out,filter{filter_k});
 }
@@ -37,11 +37,12 @@ namespace {
 
    typedef quantity<kelvin> K;
    typedef quantity<second> s;
+
    double filter_k = 0.9;
 
-   K current_temperature{270};
-   s current_time{1000};
-  
+   K current_temperature= 270.0_K;
+   s current_time = 1000.0s;
+
 }
 
 int main()
