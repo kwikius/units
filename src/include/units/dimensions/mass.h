@@ -23,6 +23,7 @@
 #pragma once
 
 #include <units/dimensions/si_base_dimensions.h>
+#include <units/dimensions/si_prefixes.h>
 #include <units/quantity.h>
 
 namespace units {
