@@ -51,8 +51,9 @@ int main()
    std::vector<K> new_values = {K{270},K{271},K{270},K{271},K{270},K{270}};
 
    for (; current_time < 1005s;  ++current_time){
-      std::cout << "temperature at " << current_time << " = " << current_temperature <<'\n';
       update(current_temperature,new_values, filter_k);
+      std::cout << "temperature at " << current_time << " = " << current_temperature <<'\n';
+      
    }
 
 }
