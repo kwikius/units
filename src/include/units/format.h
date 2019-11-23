@@ -185,8 +185,9 @@ private:
     constexpr arg_ref_type make_arg_ref(fmt::basic_string_view<CharT> arg_id)
     {
       context.check_arg_id(arg_id);
-      const auto str_val = fmt::internal::string_view_metadata(format_str, arg_id);
-      return arg_ref_type(str_val);
+     // const auto str_val = fmt::internal::string_view_metadata(format_str, arg_id);
+     // return arg_ref_type(str_val);
+     return arg_ref_type(arg_id);
     }
 
     constexpr arg_ref_type make_arg_ref(fmt::internal::auto_id)
