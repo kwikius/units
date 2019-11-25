@@ -19,7 +19,8 @@ struct filter{
    template <typename T>
    T operator()( T const & lhs, T const & rhs)const 
    {
-      return lhs * m_k + rhs * (1.0-m_k);
+      return lhs + (rhs-lhs) * (1.0-m_k);
+      //return lhs * m_k + rhs * (1.0-m_k);
    }
    private:
       double const m_k;
@@ -50,10 +51,13 @@ int main()
 
    std::vector<K> new_values = {K{270},K{271},K{270},K{271},K{270},K{270}};
 
+   auto const old_temperature = current_temperature;
+   auto const old_time = current_time;
+
    for (; current_time < 1005s;  ++current_time){
       update(current_temperature,new_values, filter_k);
       std::cout << "temperature at " << current_time << " = " << current_temperature <<'\n';
-      
-   }
 
+   }
+   std::cout << "temperature dK/dt = " << (current_temperature - old_temperature) / (current_time - old_time); 
 }
