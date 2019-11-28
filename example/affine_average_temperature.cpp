@@ -102,7 +102,7 @@ struct filter{
    {
     #if 1
       // This will fail at compile time
-      // return lhs + (rhs-lhs) * (1.0-m_k);
+      // return lhs * m_k + rhs * (1.0-m_k);
       // absolute quantities cant be added directly so
       // need a bit of persuasion
       // subtracting 2 absolute quantities returns a quantity_difference 
