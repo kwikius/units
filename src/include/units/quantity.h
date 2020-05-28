@@ -58,6 +58,22 @@ concept ll_quantity_concept = std::is_base_of_v<quantity_friend_operations,T>;
 // no increase in size of derived object , see https://en.cppreference.com/w/cpp/language/ebo
 struct quantity_friend_operations{
 
+   // so the stated problem here was that anyone making quantity_operations a base class would be
+   // a model of ll_quantity_concept
+   // To prevent that therefore we make personal ctor functions private and intended class a friend
+   private:
+   template<Dimension D, UnitOf<D> U, Scalar Rep>
+   friend class units::quantity;
+
+   quantity_friend_operations() = default;
+   quantity_friend_operations(const quantity_friend_operations&) = default;
+   quantity_friend_operations(quantity_friend_operations&&) = default;
+
+   quantity_friend_operations& operator=(const quantity_friend_operations&) = default;
+   quantity_friend_operations& operator=(quantity_friend_operations&&) = default;
+
+   public:
+
    template<ll_quantity_concept Lhs, ll_quantity_concept Rhs>
    [[nodiscard]] friend constexpr Quantity AUTO operator+(const Lhs& lhs, const Rhs& rhs)
      requires 
