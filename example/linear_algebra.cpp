@@ -27,6 +27,7 @@
 #include <linear_algebra.hpp>
 #include <iostream>
 
+#if 0
 namespace {
 
 template<class ET, class OT>
@@ -356,11 +357,12 @@ void quantity_of_matrix_tests()
 */
 
 }
+#endif
 
 int main()
 {
-  vector_of_quantity_tests();
-  matrix_of_quantity_tests();
+  //vector_of_quantity_tests();
+ // matrix_of_quantity_tests();
  // quantity_of_vector_tests();
  // quantity_of_matrix_tests();
 }
