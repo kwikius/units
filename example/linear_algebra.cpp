@@ -24,7 +24,7 @@
 #include <units/physical/si/force.h>
 #include <units/physical/si/energy.h>
 #include <units/format.h>
-#include <linear_algebra.hpp>
+//#include <linear_algebra.hpp>
 #include <iostream>
 
 #if 0
